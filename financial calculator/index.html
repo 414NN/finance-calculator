@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณสถานะทางการเงิน</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h2>คำนวณสถานะทางการเงิน</h2>
+        
+        <div class="input-group">
+            <label for="income">รายรับ (บาท)</label>
+            <input type="number" id="income" placeholder="ใส่จำนวนเงิน">
+        </div>
+
+        <div class="input-group">
+            <label for="expense">รายจ่าย (บาท)</label>
+            <input type="number" id="expense" placeholder="ใส่จำนวนเงิน">
+        </div>
+
+        <button onclick="calculate()">คำนวณ</button>
+
+        <div class="balance">
+      
+            </div>    
+            ยอดคงเหลือ: <span id="balance" class="positive">0</span> บาท
+        </div>
+
+        <footer style="text-align: center; padding: 15px; background: #f0f0f0; color: #555; margin-top: 30px;">
+            <p>© 2025 จัดทำโดย <strong>น.ส.สิริกานต์ จันเกิ้น
+                นาย พรชัย มุกดาดี
+                น.ส.ก้านพลอย คานเขต
+                น.ส.รุจิรา พันธ์สอน
+                น.ส.อธิชา สวัสดิ์ศรี
+            </strong></p>
+            <p>เว็บไซต์นี้สร้างขึ้นเพื่อช่วยคำนวณรายรับรายจ่ายให้กับผู้ใช้งาน
+                ส่ง ครูธารทิพย์ ทานะ
+            </p>
+        </footer>
+        <!-- 🔹 ส่วนคำแนะนำ (ซ่อนก่อน) -->
+        <div id="advice-section" style="display: none;">
+            <h3>📊 คำแนะนำทางการเงิน</h3>
+            <div id="advice" class="advice"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            let income = parseFloat(document.getElementById("income").value) || 0;
+            let expense = parseFloat(document.getElementById("expense").value) || 0;
+            let balance = income - expense;
+
+            let balanceText = document.getElementById("balance");
+            let adviceText = document.getElementById("advice");
+            let adviceSection = document.getElementById("advice-section");
+
+            balanceText.textContent = balance.toLocaleString();
+
+            // แสดงคำแนะนำ
+            adviceSection.style.display = "block";
+
+            if (balance >= 0) {
+                balanceText.classList.remove("negative");
+                balanceText.classList.add("positive");
+                adviceText.classList.remove("negative");
+                adviceText.classList.add("positive");
+
+                adviceText.innerHTML = "✅ คุณมีเงินเหลือ! <br>💡 ลองออมเงิน หรือหาวิธีลงทุนที่เหมาะกับคุณ";
+            } else {
+                balanceText.classList.remove("positive");
+                balanceText.classList.add("negative");
+                adviceText.classList.remove("positive");
+                adviceText.classList.add("negative");
+
+                adviceText.innerHTML = `
+                    ⚠️ คุณติดลบ! แก้ปัญหาการเงิน ง่ายๆ 5 วิธี:  
+                    <ol>
+                        <li>แยกประเภทของรายจ่ายต่าง ๆ และหนี้สิน</li>
+                        <li>ทำบัญชีรายรับ-รายจ่ายอย่างสม่ำเสมอ</li>
+                        <li>ปรับพฤติกรรมการใช้จ่ายใหม่</li>
+                        <li>จัดการภาระหนี้สินที่มีอยู่</li>
+                        <li>หาวิธีเพิ่มรายได้ เช่น งานเสริมหรือขายของออนไลน์</li>
+                    </ol>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
